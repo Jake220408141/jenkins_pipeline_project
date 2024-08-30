@@ -117,5 +117,5 @@ pipeline {
                 subject: "Build Status Failure Alert",
                 body: "Something has failed. Check Jenkins logs for more details"
         }        
-    }
+    } // this is a test comment
 }
