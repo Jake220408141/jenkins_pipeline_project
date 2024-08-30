@@ -115,7 +115,7 @@ pipeline {
             echo 'Sending status failure email'
             mail to: "cooperjake@deakin.edu.au",
                 subject: "Build Status Failure Alert",
-                body: "Integration Tests on Staging have failed. Check Jenkins logs for more details"
+                body: "Something has failed. Check Jenkins logs for more details"
         }        
     }
 }
