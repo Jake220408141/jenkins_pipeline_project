@@ -4,14 +4,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Retreive code from Github'
-                checkout scm
+                // Command checkout scm
             }
         }
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                // Tool: Maven
-                // Command: mvn clean package
+                // Tool: Poetry
+                // Command: poetry build
             }
         }
         stage('Unit and Integration Tests') {
@@ -19,7 +19,6 @@ pipeline {
                 echo 'Running unit and integration tests...'
                 // Tools: PyTest
                 // Command: pytest hellow_world.py
-                sh 'python hello_world.py'
             }
             post {
                 success {
@@ -40,15 +39,15 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Running code analysis...'
-                // Tool: SonarQube
-                // Command: sonar-scanner
+                // Tool: pylint
+                // Command: pylint hellow_world.py
             }
         }
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan...'
-                // Tool: OWASP Dependency-Check
-                // Command: dependency-check.sh
+                // Tool: Bandit
+                // Command: bandit -r jenkins_pipeline_project/
             }
             post {
                 success {
@@ -70,15 +69,15 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to staging environment...'
-                // Tool: AWS CLI, or Ansible
-                // Command: aws deploy or ansible-playbook
+                // Tool: AWS CLI
+                // Command: aws deploy
             }
         }
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging...'
-                // Tool: Selenium, JUnit
-                // Command: mvn integration-test
+                // Tool: Selenium
+                // Command: pytest --selenium
             }
             post {
                 success {
@@ -99,8 +98,8 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to production...'
-                // Tool: AWS CLI, or Ansible
-                // Command: aws deploy or ansible-playbook
+                // Tool: AWS
+                // Command: aws deploy
             }
         }
     }
