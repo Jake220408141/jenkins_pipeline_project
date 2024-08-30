@@ -19,7 +19,7 @@ pipeline {
                 echo 'Running unit and integration tests...'
                 // Tools: PyTest
                 // Command: pytest hellow_world.py
-                //sh 'python hello_world.py'
+                sh 'python hello_world.py'
             }
             post {
                 success {
