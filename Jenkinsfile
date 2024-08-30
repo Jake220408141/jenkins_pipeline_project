@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Retreive code from Github'
-                // Command checkout scm
+                // Command: checkout scm
             }
         }
         stage('Build') {
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Running unit and integration tests...'
                 // Tools: PyTest
-                // Command: pytest hellow_world.py
+                // Command: pytest hello_world.py
             }
             post {
                 success {
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 echo 'Running code analysis...'
                 // Tool: pylint
-                // Command: pylint hellow_world.py
+                // Command: pylint hello_world.py
             }
         }
         stage('Security Scan') {
@@ -98,7 +98,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to production...'
-                // Tool: AWS
+                // Tool: AWS CLI
                 // Command: aws deploy
             }
         }
