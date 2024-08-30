@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                echo 'Retreive code from Github'
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building the project...'
@@ -11,8 +17,9 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests...'
-                // Tools: JUnit for unit tests, TestNG or JUnit for integration tests
-                // Command: mvn test
+                // Tools: PyTest
+                // Command: pytest hellow_world.py
+                //sh 'python hello_world.py'
             }
             post {
                 success {
