@@ -26,7 +26,7 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Success Email",
                         body: "Unit and Integration Tests were successful"
-                    sleep(time: 1, units: 'SECONDS')
+                    sleep(time: 1, unit: 'SECONDS')
                 }
                 failure {
                     echo 'Sending status failure email'
@@ -55,7 +55,7 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Success Email",
                         body: "Security Scan was successful"
-                    sleep(time: 1, units: 'SECONDS')
+                    sleep(time: 1, unit: 'SECONDS')
                 }
                 failure {
                     echo 'Sending status failure email'
@@ -85,7 +85,7 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                          subject: "Build Status Success Email",
                         body: "Integration Tests on Staging were successful"
-                    sleep(time: 1, units: 'SECONDS')
+                    sleep(time: 1, unit: 'SECONDS')
                 }
                 failure {
                     echo 'Sending status failure email'
@@ -109,7 +109,7 @@ pipeline {
             mail to: "cooperjake@deakin.edu.au",
                 subject: "Build Status Success",
                 body: "All building stages were successful. Application deployed to production."
-            sleep(time: 1, units: 'SECONDS')
+            sleep(time: 1, unit: 'SECONDS')
         }
         failure {
             echo 'Sending status failure email'
