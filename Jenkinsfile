@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        LOG_FILE = 'build.log'
+        LOG_FILE = 'echo.log'
         EMAIL = 'cooperjake@deakin.edu.au'
     }
 
@@ -155,7 +155,7 @@ def sendEmail(stage) {
             to: env.EMAIL,
             subject: subject,
             body: body,
-            //attachLog: true
+            attachLog: true
             attachmentsPattern: env.LOG_FILE
         )
         
