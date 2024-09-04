@@ -155,7 +155,7 @@ def sendEmail(stage) {
             to: env.EMAIL,
             subject: subject,
             body: body,
-            attachLog: true
+            attachLog: true,
             attachmentsPattern: env.LOG_FILE
         )
         
