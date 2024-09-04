@@ -30,19 +30,6 @@ pipeline {
                 always {
                     sendEmail('Unit and integration tests')
                 }
-                /*success {
-                    echo 'Sending status success email'
-                    mail to: "cooperjake@deakin.edu.au",
-                        subject: "Build Status Success Email",
-                        body: "Unit and Integration Tests were successful"
-                    sleep(time: 1, unit: 'SECONDS')
-                }
-                failure {
-                    echo 'Sending status failure email'
-                    mail to: "cooperjake@deakin.edu.au",
-                        subject: "Build Status Failure Alert",
-                        body: "Unit and Integration Tests have failed. Check Jenkins logs for more details"
-                }*/
             }
         }
         stage('Code Analysis') {
@@ -61,21 +48,7 @@ pipeline {
             post {
                 always {
                     sendEmail('Security scan')
-                }
-                /*success {
-                    echo 'Sending status success email'
-                    mail to: "cooperjake@deakin.edu.au",
-                        subject: "Build Status Success Email",
-                        body: "Security Scan was successful"
-                    sleep(time: 1, unit: 'SECONDS')
-                }
-                failure {
-                    echo 'Sending status failure email'
-                    mail to: "cooperjake@deakin.edu.au",
-                        subject: "Build Status Failure Alert",
-                        body: "Security Scan has failed. Check Jenkins logs for more details"
-                }*/
-                
+                }                
             }
         }
         stage('Deploy to Staging') {
@@ -95,19 +68,6 @@ pipeline {
                 always {
                     sendEmail('Integration tests on staging')
                 }
-                /*success {
-                    echo 'Sending status success email'
-                    mail to: "cooperjake@deakin.edu.au",
-                         subject: "Build Status Success Email",
-                        body: "Integration Tests on Staging were successful"
-                    sleep(time: 1, unit: 'SECONDS')
-                }
-                failure {
-                    echo 'Sending status failure email'
-                    mail to: "cooperjake@deakin.edu.au",
-                        subject: "Build Status Failure Alert",
-                        body: "Integration Tests on Staging have failed. Check Jenkins logs for more details"
-                }*/
             }
         }
         stage('Deploy to Production') {
@@ -122,19 +82,6 @@ pipeline {
         always {
             sendEmail('Full pipeline')
         }
-        /*success {
-            echo 'Sending status success email'
-            mail to: "cooperjake@deakin.edu.au",
-                subject: "Build Status Success",
-                body: "All building stages were successful. Application deployed to production."
-            sleep(time: 1, unit: 'SECONDS')
-        }
-        failure {
-            echo 'Sending status failure email'
-            mail to: "cooperjake@deakin.edu.au",
-                subject: "Build Status Failure Alert",
-                body: "Something has failed. Check Jenkins logs for more details"
-        }*/
     }
 }
 
