@@ -95,8 +95,9 @@ def echoAndLog(message) {
 def sendEmail(stage) {
     script {
         def buildStatus = currentBuild.result ?: 'SUCCESS'
-        def subject = "Build status ${buildStatus} - ${stage}"
-        def body = "${stage} ${buildStatus.toLowerCase()}.\nCheck Jenkins logs for more details."
+        def stageName = env.STAGE_NAME ?: 'Unknown Stage'
+        def subject = "Build status ${buildStatus} - ${stageName}"
+        def body = "${stageName} ${buildStatus.toLowerCase()}.\nCheck Jenkins logs for more details."
 
         emailext(
             to: env.EMAIL,
