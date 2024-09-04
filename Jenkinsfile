@@ -155,8 +155,8 @@ def sendEmail(stage) {
             to: env.EMAIL,
             subject: subject,
             body: body,
-            attachLog: true
-            //attachmentsPattern: env.LOG_FILE
+            //attachLog: true
+            attachmentsPattern: env.LOG_FILE
         )
         
         sleep(time: 1, unit: 'SECONDS')
