@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+        LOG_FILE = 'build.log'
+        EMAIL = 'cooperjake@deakin.edu.au'
+    }
+
+
     stages {
         stage('Checkout') {
             steps {
@@ -16,12 +22,15 @@ pipeline {
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests...'
+                echoAndLog('Running unit and integration tests...')
                 // Tools: PyTest
                 // Command: pytest hello_world.py
             }
             post {
-                success {
+                always {
+                    sendEmail('Unit and integration tests')
+                }
+                /*success {
                     echo 'Sending status success email'
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Success Email",
@@ -33,7 +42,7 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Failure Alert",
                         body: "Unit and Integration Tests have failed. Check Jenkins logs for more details"
-                }
+                }*/
             }
         }
         stage('Code Analysis') {
@@ -45,12 +54,15 @@ pipeline {
         }
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
+                echoAndLog('Performing security scan...')
                 // Tool: Bandit
                 // Command: bandit -r jenkins_pipeline_project/
             }
             post {
-                success {
+                always {
+                    sendEmail('Security scan')
+                }
+                /*success {
                     echo 'Sending status success email'
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Success Email",
@@ -62,7 +74,7 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Failure Alert",
                         body: "Security Scan has failed. Check Jenkins logs for more details"
-                }
+                }*/
                 
             }
         }
@@ -75,12 +87,15 @@ pipeline {
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging...'
+                echoAndLog('Running integration tests on staging...')
                 // Tool: Selenium
                 // Command: pytest --selenium
             }
             post {
-                success {
+                always {
+                    sendEmail('Integration tests on staging')
+                }
+                /*success {
                     echo 'Sending status success email'
                     mail to: "cooperjake@deakin.edu.au",
                          subject: "Build Status Success Email",
@@ -92,19 +107,22 @@ pipeline {
                     mail to: "cooperjake@deakin.edu.au",
                         subject: "Build Status Failure Alert",
                         body: "Integration Tests on Staging have failed. Check Jenkins logs for more details"
-                }
+                }*/
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production...'
+                echoAndLog('Deploying to production...')
                 // Tool: AWS CLI
                 // Command: aws deploy
             }
         }
     }
     post {
-        success {
+        always {
+            sendEmail('Full pipeline')
+        }
+        /*success {
             echo 'Sending status success email'
             mail to: "cooperjake@deakin.edu.au",
                 subject: "Build Status Success",
@@ -116,6 +134,28 @@ pipeline {
             mail to: "cooperjake@deakin.edu.au",
                 subject: "Build Status Failure Alert",
                 body: "Something has failed. Check Jenkins logs for more details"
-        }        
+        }*/
+    }
+}
+
+def echoAndLog(message) {
+    echo message
+    script {
+        sh "echo '${message}' >> ${env.LOG_FILE}"
+    }
+}
+
+def sendEmail(stage) {
+    script {
+        def buildStatus = currentBuild.result ?: 'SUCCESS'
+        def subject = "Build status ${buildStatus} - ${stage}"
+        def body = "${stage} ${buildStatus.toLowerCase()}.\nCheck Jenkins logs for more details."
+
+        mail to: env.EMAIL,
+            subject: subject,
+            body: body,
+            attachmentsPattern: env.LOG_FILE
+        
+        sleep(time: 1, unit: 'SECONDS')
     }
 }
