@@ -151,10 +151,12 @@ def sendEmail(stage) {
         def subject = "Build status ${buildStatus} - ${stage}"
         def body = "${stage} ${buildStatus.toLowerCase()}.\nCheck Jenkins logs for more details."
 
-        mail to: env.EMAIL,
+        emailext:(
+            to: env.EMAIL,
             subject: subject,
             body: body,
-            attachmentsPattern: env.LOG_FILE
+            attachLog: true
+            //attachmentsPattern: env.LOG_FILE
         
         sleep(time: 1, unit: 'SECONDS')
     }
