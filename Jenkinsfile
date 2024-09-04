@@ -151,7 +151,7 @@ def sendEmail(stage) {
         def subject = "Build status ${buildStatus} - ${stage}"
         def body = "${stage} ${buildStatus.toLowerCase()}.\nCheck Jenkins logs for more details."
 
-        emailext:(
+        emailext(
             to: env.EMAIL,
             subject: subject,
             body: body,
